@@ -1,0 +1,216 @@
+@charset "UTF-8";
+
+/*Примеры медиа*/
+
+/*кастомные шрифты, используйте сервер заказчика, поддержка кастомных шрифтов плохая, предусмотрите фолбек*/
+
+@import url("http://htmlonelove.top/test/fonts/somefont.woff");
+
+@font-face {
+  font-style: normal;
+  font-weight: normal;
+  font-family: "Somefont";
+  font-display: swap;
+  src: url("http://htmlonelove.top/fonts/fonts/somefont.woff2") format("woff2"), url("http://htmlonelove.top/fonts/fonts/somefont.woff") format("woff");
+}
+
+/*CSS Reset*/
+
+html,
+body {
+  margin: 0 auto !important;
+  padding: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  background: #FFFFFF;
+  font-family: Arial, sans-serif;
+  color: #3F4450;
+}
+
+/* What it does: Stops email clients resizing small text. */
+
+* {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* What it does: Centers email on Android 4.4 */
+
+div[style*="margin: 16px 0"] {
+  margin: 0 !important;
+}
+
+/* What it does: Stops Outlook from adding extra spacing to tables. */
+
+table,
+td {
+  mso-table-lspace: 0pt !important;
+  mso-table-rspace: 0pt !important;
+}
+
+/* What it does: Fixes webkit padding issue. */
+
+table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  /*table-layout: fixed !important;*/
+  margin: 0 !important;
+}
+
+/* Reset padding and margin */
+
+td,
+tr {
+  margin: 0;
+  padding: 0;
+}
+
+/* What it does: Uses a better rendering method when resizing images in IE. */
+
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
+/* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+
+a {
+  text-decoration: none;
+}
+
+/* What it does: A work-around for email clients meddling in triggered links. */
+
+*[x-apple-data-detectors],
+.unstyle-auto-detected-links *,
+.aBn {
+  border-bottom: 0 !important;
+  cursor: default !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+}
+
+/* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+
+.a6S {
+  display: none !important;
+  opacity: 0.01 !important;
+}
+
+/* What it does: Prevents Gmail from changing the text color in conversation threads. */
+
+.im {
+  color: inherit !important;
+}
+
+/* If the above doesn't work, add a .g-img class to any image in question. */
+
+img.g-img + div {
+  display: none !important;
+}
+
+/* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+
+/* Create one of these media queries for each additional viewport size you'd like to fix */
+
+/* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+
+/* iPhone 6, 6S, 7, 8, and X */
+
+/* iPhone 6+, 7+, and 8+ */
+
+/* What it does: Prevents iOS from highlighting phones inside text (not links) */
+
+a[x-apple-data-detectors] {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+}
+
+.footer {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.footer__item {
+  padding: 0 0 16px 0;
+}
+
+.footer__title {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #333333;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__link {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: #333333;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__block {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  width: 170px;
+  min-width: 170px;
+}
+
+.footer__inner-block {
+  padding: 0 10px 0 0;
+}
+
+.footer__menu {
+  font-size: 0;
+  line-height: 0;
+  width: 100%;
+}
+
+.phone {
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  text-decoration: none;
+  color: #00529C;
+  padding: 0;
+  margin: 0ж;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+  u ~ div .email-container {
+    min-width: 320px !important;
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+  u ~ div .email-container {
+    min-width: 375px !important;
+  }
+}
+
+@media only screen and (min-device-width: 414px) {
+  u ~ div .email-container {
+    min-width: 414px !important;
+  }
+}

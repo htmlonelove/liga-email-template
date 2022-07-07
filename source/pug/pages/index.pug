@@ -1,0 +1,19 @@
+extends ../components/base/layout
+
+block variables
+  - const title = "Title"
+  - const description = "description"
+
+block main
+  // простой пример
+  table(bgcolor="#ffffff" align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto;")
+    tbody
+      tr
+        td(width="100%" valign="top" style="padding: 12px; margin: 0;")
+          p(style="font-family:  Arial, sans-serif;font-weight: 700;font-size: 14px;line-height: 14px;color: #333333;text-transform: uppercase;padding: 0;margin: 0") Всегда оборачивайте текст внутри TD в нужные теги
+      tr
+        td(width="100%" valign="top" style="padding: 12px 12px 0 12px; margin: 0;")
+          p(style="font-family:  Arial, sans-serif;font-weight: 700;font-size: 14px;line-height: 14px;color: #333333;padding: 0;margin: 0") Ниже пример адаптивной картинки и условия для аутлука
+      tr
+        td(width="100%" valign="top" style="padding: 12px 0 0 0; margin: 0; overflow: hidden")
+          +img('https://upload.wikimedia.org/wikipedia/commons/b/b5', 'Arbuzov_house-museum_Kazan', 'jpg', 576, "sometext", "20px 10px 25px" )
