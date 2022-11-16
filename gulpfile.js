@@ -10,6 +10,7 @@ const cached = require('gulp-cached');
 const gcmq = require('gulp-group-css-media-queries');
 const styleInject = require("gulp-style-inject");
 const inlineCss = require('gulp-inline-css');
+const replace = require('gulp-replace');
 
 const pugToHtml = () => {
   return gulp.src('source/pug/pages/*.pug')
@@ -25,8 +26,24 @@ const styleInjectProcess = () => {
     .pipe(gulp.dest("./build"));
 };
 
+const replaceTag = () => {
+  return gulp.src('build/*.html')
+    .pipe(replace('styleForStyleTag', 'style'))
+    .pipe(gulp.dest('build/'));
+};
+
 const css = () => {
-  return gulp.src('source/sass/style.scss')
+  return gulp.src('source/sass/styleForInline.scss')
+      .pipe(plumber())
+      .pipe(sourcemap.init())
+      .pipe(sass())
+      .pipe(gcmq()) // выключите, если в проект импортятся шрифты через ссылку на внешний источник
+      .pipe(gulp.dest('build/css'))
+      .pipe(server.stream());
+};
+
+const cssForStyleTag = () => {
+  return gulp.src('source/sass/styleForStyleTag.scss')
       .pipe(plumber())
       .pipe(sourcemap.init())
       .pipe(sass())
@@ -38,6 +55,20 @@ const css = () => {
 const inline = () => {
   return gulp.src('build/*.html')
     .pipe(inlineCss({
+      applyStyleTags: true,
+      applyLinkTags: false,
+      removeStyleTags: true,
+      removeLinkTags: false,
+      applyWidthAttributes: true,
+      applyTableAttributes: true
+    }))
+    .pipe(gulp.dest('build/'));
+};
+
+const inlineForStyleTag = () => {
+  return gulp.src('build/*.html')
+    .pipe(inlineCss({
+      extraCss: 'css/styleForStyleTag.css',
       applyStyleTags: true,
       applyLinkTags: false,
       removeStyleTags: false,
@@ -95,9 +126,9 @@ const refresh = (done) => {
   done();
 };
 
-const start = gulp.series(clean, copy, css, pugToHtml, inline, syncServer);
+const start = gulp.series(clean, copy, css, cssForStyleTag, pugToHtml, inline, inlineForStyleTag, replaceTag, syncServer);
 
-const build = gulp.series(clean, copy, css, pugToHtml, inline, optimizeImages);
+const build = gulp.series(clean, copy, css, cssForStyleTag, pugToHtml, inline, inlineForStyleTag, replaceTag, optimizeImages);
 
 exports.imagemin = optimizeImages;
 exports.start = start;

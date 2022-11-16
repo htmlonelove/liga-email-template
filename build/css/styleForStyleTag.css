@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/*Примеры медиа*/
+
+/*кастомные шрифты, используйте сервер заказчика, поддержка кастомных шрифтов плохая, предусмотрите фолбек*/
+
+@import url("http://htmlonelove.top/test/fonts/somefont.woff");
+
+@font-face {
+  font-style: normal;
+  font-weight: normal;
+  font-family: "Somefont";
+  font-display: swap;
+  src: url("http://htmlonelove.top/fonts/fonts/somefont.woff2") format("woff2"), url("http://htmlonelove.top/fonts/fonts/somefont.woff") format("woff");
+}

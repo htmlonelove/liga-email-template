@@ -4,7 +4,7 @@ include ../components
 
 block variables
 
-html(lang="ru")
+html(lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office")
   head
     // utf-8 works for most cases
     meta(charset="utf-8")
@@ -17,16 +17,27 @@ html(lang="ru")
     // The title tag shows in email notifications, like Android 4.4.
     title= title
 
+    <!--[if mso | IE]>
+    <xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
     // кастомные шрифты, используйте сервер заказчика/шрифты гугл
     link(href="http://htmlonelove.top/test/fonts/somefont.woff" rel="stylesheet" type="text/css")
 
     style(type="text/css")
-      include ../../../../build/css/style.css
+      include ../../../../build/css/styleForInline.css
+    styleForStyleTag(type="text/css")
+      include ../../../../build/css/styleForStyleTag.css
 
-  body(width="100%" style="margin: 0!important; padding: 0 !important; mso-line-height-rule: exactly; background-color: #DFDFDF;background: #DFDFDF;")
+  body(width="100%" style="margin: 0!important; padding: 0 !important; mso-line-height-rule: exactly; background-color:" + bgcolor + ";background: " + bgcolor + ";")
     span(style="background-color:#333333!important;border-radius:4px 4px 0 0;color:#e7eaec;display:none!important;font-size:1px;line-height:1px;max-height:0;max-width:0;mso-hide:all!important;opacity:0;overflow:hidden;visibility:hidden")= description
-    center(style="width: 100%; background-color: #DFDFDF;background: #DFDFDF;")
-      div(style="width: 100%; background-color: #DFDFDF;background: #DFDFDF;word-break: normal;-webkit-text-size-adjust:none; -ms-text-size-adjust: none;line-height: normal; padding-bottom: 18px; padding-top: 18px" align="center")
+    center(style="width: 100%; background-color:" + bgcolor + ";background: " + bgcolor + ";")
+      div(style="width: 100%; background-color:" + bgcolor + ";background: " + bgcolor + ";word-break: normal;-webkit-text-size-adjust:none; -ms-text-size-adjust: none;line-height: normal; padding-bottom: 18px; padding-top: 18px" align="center")
         //HEADER start
         +header
         //HEADER start
