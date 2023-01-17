@@ -194,7 +194,7 @@ a[x-apple-data-detectors] {
   text-decoration: none;
   color: #00529C;
   padding: 0;
-  margin: 0ж;
+  margin: 0;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {

@@ -1,1 +1,16 @@
 // тут стили для адаптива, и иные, не поддерживаемые в инлайне
+a {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 400px) {
+  .header img {
+    max-width: 68px !important;
+    width: 68px  !important;
+  }
+}

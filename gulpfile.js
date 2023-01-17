@@ -8,53 +8,47 @@ const del = require('del');
 const pug = require('gulp-pug');
 const cached = require('gulp-cached');
 const gcmq = require('gulp-group-css-media-queries');
-const styleInject = require("gulp-style-inject");
 const inlineCss = require('gulp-inline-css');
 const replace = require('gulp-replace');
 
 const pugToHtml = () => {
   return gulp.src('source/pug/pages/*.pug')
-      .pipe(plumber())
-      .pipe(pug({ pretty: true }))
-      .pipe(cached('pug'))
-      .pipe(gulp.dest('build'));
-};
-
-const styleInjectProcess = () => {
-  return gulp.src("./build/*.html")
-    .pipe(styleInject())
-    .pipe(gulp.dest("./build"));
+    .pipe(plumber())
+    .pipe(pug({ pretty: true }))
+    .pipe(cached('pug'))
+    .pipe(gulp.dest('build'));
 };
 
 const replaceTag = () => {
   return gulp.src('build/*.html')
-    .pipe(replace('styleForStyleTag', 'style'))
-    .pipe(gulp.dest('build/'));
+    .pipe(replace('styleforstyletag', 'style'))
+    .pipe(gulp.dest('temp/'));
 };
 
-const css = () => {
+const cssForInline = () => {
   return gulp.src('source/sass/styleForInline.scss')
-      .pipe(plumber())
-      .pipe(sourcemap.init())
-      .pipe(sass())
-      .pipe(gcmq()) // выключите, если в проект импортятся шрифты через ссылку на внешний источник
-      .pipe(gulp.dest('build/css'))
-      .pipe(server.stream());
+    .pipe(plumber())
+    .pipe(sourcemap.init())
+    .pipe(sass())
+    .pipe(gcmq()) // выключите, если в проект импортятся шрифты через ссылку на внешний источник
+    .pipe(gulp.dest('build/css'))
+    .pipe(server.stream());
 };
 
 const cssForStyleTag = () => {
   return gulp.src('source/sass/styleForStyleTag.scss')
-      .pipe(plumber())
-      .pipe(sourcemap.init())
-      .pipe(sass())
-      .pipe(gcmq()) // выключите, если в проект импортятся шрифты через ссылку на внешний источник
-      .pipe(gulp.dest('build/css'))
-      .pipe(server.stream());
+    .pipe(plumber())
+    .pipe(sourcemap.init())
+    .pipe(sass())
+    .pipe(gcmq()) // выключите, если в проект импортятся шрифты через ссылку на внешний источник
+    .pipe(gulp.dest('build/css'))
+    .pipe(server.stream());
 };
 
-const inline = () => {
+const inlineForInline = () => {
   return gulp.src('build/*.html')
     .pipe(inlineCss({
+      extraCss: 'css/styleForInline.css',
       applyStyleTags: true,
       applyLinkTags: false,
       removeStyleTags: true,
@@ -81,16 +75,16 @@ const inlineForStyleTag = () => {
 
 const copyImages = () => {
   return gulp.src('source/img/**/*.{png,jpg}', {base: 'source'})
-      .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build'));
 };
 
 const optimizeImages = () => {
   return gulp.src('build/img/**/*.{png,jpg}')
-      .pipe(imagemin([
-        imagemin.optipng({optimizationLevel: 3}),
-        imagemin.mozjpeg({quality: 75, progressive: true}),
-      ]))
-      .pipe(gulp.dest('build/img'));
+    .pipe(imagemin([
+      imagemin.optipng({optimizationLevel: 3}),
+      imagemin.mozjpeg({quality: 75, progressive: true}),
+    ]))
+    .pipe(gulp.dest('build/img'));
 };
 
 const copy = () => {
@@ -100,7 +94,12 @@ const copy = () => {
   ], {
     base: 'source',
   })
-      .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build'));
+};
+
+const copyHtml = () => {
+  return gulp.src('temp/*.html')
+    .pipe(gulp.dest('build'));
 };
 
 const clean = () => {
@@ -116,8 +115,8 @@ const syncServer = () => {
     ui: false,
   });
 
-  gulp.watch('source/pug/**/*.pug', gulp.series(pugToHtml, refresh));
-  gulp.watch('source/sass/**/*.{scss,sass}', gulp.series(css, pugToHtml, inline, refresh));
+  gulp.watch('source/pug/**/*.pug', gulp.series(cssForInline, cssForStyleTag, pugToHtml, inlineForInline, inlineForStyleTag, replaceTag, copyHtml, refresh));
+  gulp.watch('source/sass/**/*.{scss,sass}', gulp.series(cssForInline, cssForStyleTag, pugToHtml, inlineForInline, inlineForStyleTag, replaceTag, copyHtml, refresh));
   gulp.watch('source/img/**/*.{png,jpg}', gulp.series(copyImages, pugToHtml, refresh));
 };
 
@@ -126,9 +125,9 @@ const refresh = (done) => {
   done();
 };
 
-const start = gulp.series(clean, copy, css, cssForStyleTag, pugToHtml, inline, inlineForStyleTag, replaceTag, syncServer);
+const start = gulp.series(clean, copy, cssForInline, cssForStyleTag, pugToHtml, replaceTag, inlineForInline, copyHtml, syncServer);
 
-const build = gulp.series(clean, copy, css, cssForStyleTag, pugToHtml, inline, inlineForStyleTag, replaceTag, optimizeImages);
+const build = gulp.series(clean, copy, cssForInline, cssForStyleTag, pugToHtml, replaceTag, inlineForInline, copyHtml, optimizeImages);
 
 exports.imagemin = optimizeImages;
 exports.start = start;

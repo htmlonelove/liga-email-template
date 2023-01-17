@@ -13,3 +13,19 @@
   font-display: swap;
   src: url("http://htmlonelove.top/fonts/fonts/somefont.woff2") format("woff2"), url("http://htmlonelove.top/fonts/fonts/somefont.woff") format("woff");
 }
+
+a {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 400px) {
+  .header img {
+    max-width: 68px !important;
+    width: 68px  !important;
+  }
+}
